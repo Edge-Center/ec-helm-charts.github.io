@@ -4,5 +4,5 @@ kind: CSIDriver
 metadata:
   name: csi.edgecenter.org
 spec:
-  attachRequired: false
+  attachRequired: true
   podInfoOnMount: true
