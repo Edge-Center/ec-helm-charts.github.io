@@ -21,6 +21,10 @@ spec:
         - name: node-driver-registrar
           image: "{{ .Values.images.nodeRegistrar.repository }}:{{ .Values.images.nodeRegistrar.tag }}"
           imagePullPolicy: "{{ .Values.images.nodeRegistrar.pullPolicy }}"
+          {{- with index .Values.nodeplugin.resources "node-driver-registrar" }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           args:
             - --csi-address=/csi/csi.sock
             - --kubelet-registration-path=/var/lib/kubelet/plugins/csi.edgecenter.org/csi.sock
@@ -38,6 +42,10 @@ spec:
         - name: liveness-probe
           image: "{{ .Values.images.nodeLivenessProbe.repository }}:{{ .Values.images.nodeLivenessProbe.tag }}"
           imagePullPolicy: "{{ .Values.images.nodeLivenessProbe.pullPolicy }}"
+          {{- with index .Values.nodeplugin.resources "liveness-probe" }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           args:
             - --csi-address=/csi/csi.sock
           volumeMounts:
@@ -47,6 +55,10 @@ spec:
         - name: ec-csi-plugin
           image: "{{ .Values.images.ecCsiPlugin.repository }}:{{ .Values.images.ecCsiPlugin.tag }}"
           imagePullPolicy: "{{ .Values.images.ecCsiPlugin.pullPolicy }}"
+          {{- with index .Values.nodeplugin.resources "ec-csi-plugin" }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
             - name: CLUSTER_ID
               valueFrom:

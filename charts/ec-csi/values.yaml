@@ -51,8 +51,24 @@ images:
 
   ecCsiPlugin:
     repository: "ghcr.io/edge-center/edgecenter-csi"
-    tag: "latest"
+    tag: "v1.1.1"
     pullPolicy: "IfNotPresent"
+
+controller:
+  resources:
+    csi-attacher: {}
+    csi-provisioner: {}
+    csi-snapshotter: {}
+    snapshot-controller: {}
+    csi-resizer: {}
+    liveness-probe: {}
+    ec-csi-plugin: {}
+
+nodeplugin:
+  resources:
+    node-driver-registrar: {}
+    liveness-probe: {}
+    ec-csi-plugin: {}
 
 # Параметры StorageClass
 storageClasses:
