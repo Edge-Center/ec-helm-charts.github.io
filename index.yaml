@@ -14,6 +14,15 @@ entries:
   ec-csi-driver:
   - apiVersion: v2
     appVersion: v1.1.1
+    created: "2026-06-22T10:49:31.325709031Z"
+    description: A Helm chart for EdgeCenter CSI Driver
+    digest: 61aa459ee692852c4267fabf722e2c4e972c0f652b4eb18875b32603929908cf
+    name: ec-csi-driver
+    urls:
+    - https://github.com/Edge-Center/ec-helm-charts.github.io/releases/download/ec-csi-driver-1.0.2/ec-csi-driver-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: v1.1.1
     created: "2026-06-03T13:21:19.362567246Z"
     description: A Helm chart for EdgeCenter CSI Driver
     digest: 576e02d52c08df78044b15ae1235ca599ffb1ebda7f1c7a8de54583412f0396f
@@ -39,4 +48,4 @@ entries:
     urls:
     - https://github.com/Edge-Center/ec-helm-charts.github.io/releases/download/ec-csi-driver-0.1.1/ec-csi-driver-0.1.1.tgz
     version: 0.1.1
-generated: "2026-06-03T13:21:19.362585961Z"
+generated: "2026-06-22T10:49:31.325736402Z"
