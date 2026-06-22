@@ -55,6 +55,12 @@ images:
     pullPolicy: "IfNotPresent"
 
 controller:
+  timeouts:
+    csi-attacher: "2m"
+    csi-provisioner: "30s"
+    csi-snapshotter: "3m"
+    csi-resizer: "30s"
+
   resources:
     csi-attacher: {}
     csi-provisioner: {}

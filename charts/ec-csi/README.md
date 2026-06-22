@@ -16,6 +16,7 @@
 - `global.imagePullSecrets`: Секрет Kubernetes, содержащий учетные данные для доступа к реестру контейнеров. 
 - `global.dockerconfigjson`: JSON-конфигурация для аутентификации в реестре контейнеров.
 - `images`: Раздел, содержащий информацию о репозиториях и тегах образов контейнеров для различных компонентов CSI.
+- `controller.timeouts`: Таймауты CSI компонентов (`csi-attacher`, `csi-provisioner`, `csi-snapshotter`, `csi-resizer`). Значения задаются в формате duration, например `30s` или `3m`.
 - `storageClasses`: Раздел, определяющий конфигурацию StorageClass для различных типов хранилищ.
   * `name`: Имя StorageClass.
   * `type`: Тип хранилища.

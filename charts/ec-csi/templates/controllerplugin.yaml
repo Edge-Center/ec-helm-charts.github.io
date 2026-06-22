@@ -32,7 +32,7 @@ spec:
             - --leader-election-namespace={{ .Values.global.namespace }}
             - --leader-election=true
             - --retry-interval-max=15s
-            - --timeout=2m
+            - --timeout={{ index .Values.controller.timeouts "csi-attacher" }}
             - --reconcile-sync=5m
             - --v=5
           volumeMounts:
@@ -51,7 +51,7 @@ spec:
             - --leader-election-namespace={{ .Values.global.namespace }}
             - --leader-election=true
             - --retry-interval-max=15s
-            - --timeout=30s
+            - --timeout={{ index .Values.controller.timeouts "csi-provisioner" }}
             - --v=5
             - --default-fstype=ext4
           volumeMounts:
@@ -67,7 +67,7 @@ spec:
           {{- end }}
           args:
             - --csi-address=/var/lib/csi/sockets/pluginproxy/csi.sock
-            - --timeout=3m
+            - --timeout={{ index .Values.controller.timeouts "csi-snapshotter" }}
             - --extra-create-metadata
             - --leader-election=true
           volumeMounts:
@@ -100,7 +100,7 @@ spec:
             - --leader-election-namespace={{ .Values.global.namespace }}
             - --leader-election=true
             - --retry-interval-max=15s
-            - --timeout=30s
+            - --timeout={{ index .Values.controller.timeouts "csi-resizer" }}
             - --v=5
             - --handle-volume-inuse-error=false
           volumeMounts:
