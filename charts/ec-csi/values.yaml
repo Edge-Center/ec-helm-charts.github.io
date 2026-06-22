@@ -57,7 +57,7 @@ images:
 controller:
   timeouts:
     csi-attacher: "2m"
-    csi-provisioner: "30s"
+    csi-provisioner: "3m"
     csi-snapshotter: "3m"
     csi-resizer: "30s"
 
