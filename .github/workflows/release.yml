@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  HELM_REPO: oci-charts
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -35,3 +38,71 @@ jobs:
           config: cr.yaml
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  publish-oci:
+    name: Publish charts to Harbor
+    runs-on: ubuntu-latest
+    needs: release
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3.5
+        with:
+          version: v3.13.0
+
+      - name: Package changed charts
+        id: package
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          mapfile -t chart_dirs < <(
+            git diff --name-only "${BEFORE_SHA}" "${GITHUB_SHA}" -- charts/ |
+              awk -F/ 'NF >= 3 { print $1 "/" $2 }' |
+              sort -u
+          )
+
+          mkdir -p packaged
+          for chart_dir in "${chart_dirs[@]}"; do
+            if [[ ! -f "${chart_dir}/Chart.yaml" ]]; then
+              continue
+            fi
+
+            helm dependency build "${chart_dir}" --skip-refresh
+            helm package "${chart_dir}" --destination packaged
+          done
+
+          if compgen -G 'packaged/*.tgz' > /dev/null; then
+            echo "has_charts=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "No changed Helm charts to publish"
+            echo "has_charts=false" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Log in to Harbor
+        if: steps.package.outputs.has_charts == 'true'
+        env:
+          HARBOR_ADDR: ${{ secrets.HARBOR_ADDR }}
+          HARBOR_USER: ${{ secrets.HARBOR_USER }}
+          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+        run: |
+          printf '%s' "${HARBOR_PASSWORD}" |
+            helm registry login "${HARBOR_ADDR}" \
+              --username "${HARBOR_USER}" \
+              --password-stdin
+
+      - name: Push charts to Harbor
+        if: steps.package.outputs.has_charts == 'true'
+        env:
+          HARBOR_ADDR: ${{ secrets.HARBOR_ADDR }}
+        run: |
+          for package in packaged/*.tgz; do
+            helm push "${package}" "oci://${HARBOR_ADDR}/${HELM_REPO}"
+          done
