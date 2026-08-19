@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   ec-ccm:
   - apiVersion: v2
+    appVersion: v2.1.3
+    created: "2026-08-19T09:37:41.64655992Z"
+    description: Edgecenter Cloud Controller Manager
+    digest: 4c0c8ccf93228c6b7f11aa3bc96a3c568a3b2e09d70cdcbf8e4b2686268fee23
+    name: ec-ccm
+    type: application
+    urls:
+    - https://github.com/Edge-Center/ec-helm-charts.github.io/releases/download/ec-ccm-2.1.3/ec-ccm-2.1.3.tgz
+    version: 2.1.3
+  - apiVersion: v2
     appVersion: v1.0.1
     created: "2025-07-30T10:51:05.6415913Z"
     description: Edgecenter Cloud Controller Manager
@@ -84,4 +94,4 @@ entries:
     urls:
     - https://github.com/Edge-Center/ec-helm-charts.github.io/releases/download/ec-csi-driver-0.1.1/ec-csi-driver-0.1.1.tgz
     version: 0.1.1
-generated: "2026-08-18T16:19:51.736704217Z"
+generated: "2026-08-19T09:37:41.646598153Z"
