@@ -55,6 +55,12 @@ images:
     pullPolicy: "IfNotPresent"
 
 controller:
+  tolerations:
+    - operator: Exists
+      effect: NoSchedule
+    - operator: Exists
+      effect: NoExecute
+
   timeouts:
     csi-attacher: "2m"
     csi-provisioner: "3m"
@@ -71,6 +77,12 @@ controller:
     ec-csi-plugin: {}
 
 nodeplugin:
+  tolerations:
+    - operator: Exists
+      effect: NoSchedule
+    - operator: Exists
+      effect: NoExecute
+
   resources:
     node-driver-registrar: {}
     liveness-probe: {}

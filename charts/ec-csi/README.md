@@ -17,6 +17,8 @@
 - `global.dockerconfigjson`: JSON-конфигурация для аутентификации в реестре контейнеров.
 - `images`: Раздел, содержащий информацию о репозиториях и тегах образов контейнеров для различных компонентов CSI.
 - `controller.timeouts`: Таймауты CSI компонентов (`csi-attacher`, `csi-provisioner`, `csi-snapshotter`, `csi-resizer`). Значения задаются в формате duration, например `30s` или `3m`.
+- `controller.tolerations`: Tolerations для CSI controller. По умолчанию допускаются все taints с эффектами `NoSchedule` и `NoExecute`. Значение `[]` отключает tolerations.
+- `nodeplugin.tolerations`: Tolerations для CSI nodeplugin. По умолчанию допускаются все taints с эффектами `NoSchedule` и `NoExecute`. Значение `[]` отключает tolerations.
 - `storageClasses`: Раздел, определяющий конфигурацию StorageClass для различных типов хранилищ.
   * `name`: Имя StorageClass.
   * `type`: Тип хранилища.

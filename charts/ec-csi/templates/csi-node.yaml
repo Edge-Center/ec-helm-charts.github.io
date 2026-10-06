@@ -17,6 +17,10 @@ spec:
       priorityClassName: system-node-critical
       serviceAccountName: ec-csi-node-sa
       hostNetwork: true
+      {{- with .Values.nodeplugin.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: node-driver-registrar
           image: "{{ .Values.images.nodeRegistrar.repository }}:{{ .Values.images.nodeRegistrar.tag }}"
