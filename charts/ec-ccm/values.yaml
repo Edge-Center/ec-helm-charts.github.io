@@ -2,7 +2,7 @@ namespace: kube-system
 
 image:
   repository: ghcr.io/edge-center/edgecenter-ccm
-  tag: "v2.1.3"
+  tag: "v2.1.5"
   pullPolicy: IfNotPresent
 
 cloudConfig:
